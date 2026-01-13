@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>PodcastPlus — Player</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <div id="app">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" role="navigation">
+      <div class="brand">
+        <img src="assets/icons/logo.svg" alt="PodcastPlus logo" />
+        <div class="brand-text">
+          <h1>PodcastPlus</h1>
+          <small>Discover • Play • Collect</small>
+        </div>
+      </div>
+
+      <nav class="main-nav">
+        <button class="nav-btn active" data-view="discover">Discover</button>
+        <button class="nav-btn" data-view="search">Search</button>
+        <button class="nav-btn" data-view="library">Library</button>
+        <button class="nav-btn" data-view="location">Suggested Podcasts</button>
+        <button class="nav-btn" data-view="camera">QR Code Scanner</button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="theme-toggle">
+          <label for="themeSwitch">Theme</label>
+          <button id="themeSwitch">Dark</button>
+        </div>
+        <div class="smallprint">Local demo • iTunes API (placeholder)</div>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="content">
+      
+      <!-- TOP SEARCH BAR -->
+      <header class="topbar">
+        <div class="search-bar">
+          <button id="btnMic" class="topbar-icon">🎙️</button>
+
+          <input id="q"
+                 type="search"
+                 placeholder="Search podcasts or topics"
+                 class="top-input" />
+
+          <button id="btnSearch" class="top-search-btn">Search</button>
+          <button id="btnRefresh" class="topbar-icon">⟳</button>
+        </div>
+      </header>
+
+      <!-- Discover View -->
+      <section id="discover" class="view active">
+        <h2 class="view-title">Top picks for you</h2>
+        <div id="discoverGrid" class="grid"></div>
+      </section>
+
+      <!-- Search View -->
+      <section id="search" class="view">
+        <h2 class="view-title">Search results</h2>
+        <div id="searchGrid" class="grid"></div>
+      </section>
+
+      <!-- Library View -->
+      <section id="library" class="view">
+        <h2 class="view-title">Your library</h2>
+        <div id="libraryGrid" class="grid"></div>
+      </section>
+
+      <!-- Suggested Podcasts (GPS) -->
+      <section id="location" class="view">
+        <h2 class="view-title">Suggested for your Country</h2>
+        <div id="locationGrid" class="grid"></div>
+      </section>
+
+      <!-- QR Scanner View -->
+      <section id="camera" class="view">
+        <h2 class="view-title">QR Code Scanner</h2>
+
+        <div id="cameraArea" style="display:flex;flex-direction:column;gap:12px;">
+
+          <!-- FIXED VIDEO TAG -->
+          <video id="qrPreview"
+                 autoplay
+                 muted
+                 playsinline
+                 style="width:100%;max-height:480px;border-radius:12px;display:none;background:#000"></video>
+
+          <div>
+            <button id="btnCameraStart" class="top-search-btn">Start QR Scanner</button>
+            <button id="btnCameraStop" class="topbar-icon">Stop</button>
+            <div id="qrResult" style="margin-top:10px;color:var(--muted)"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Queue View -->
+      <section id="queue" class="view">
+        <h2 class="view-title">Up next</h2>
+        <div id="queueList" class="queue-list"></div>
+      </section>
+
+    </main>
+
+    <!-- RIGHT PLAYER PANEL -->
+    <aside class="player-area">
+      <div class="player-top">
+        <div class="art-wrap">
+          <img id="art" src="assets/icons/podcast-placeholder.svg" alt="Current podcast artwork" />
+        </div>
+
+        <div class="meta">
+          
+          <div class="now">
+            <div id="nowTitle">Select an episode</div>
+            <div id="nowPodcast">PodcastPlus</div>
+          </div>
+
+          <div class="seek">
+            <input id="seek" type="range" min="0" max="100" value="0" />
+            <div class="time">
+              <span id="timeNow">0:00</span>
+              <span id="timeTotal">0:00</span>
+            </div>
+          </div>
+
+          <div class="player-controls">
+            <button id="btnPrev">⟸</button>
+            <button id="btnPlay">▶</button>
+            <button id="btnNext">⟹</button>
+            <button id="btnRepeat">⤿</button>
+            <button id="btnShuffle">🔀</button>
+          </div>
+
+          <!-- HARDWARE BUTTON ROW -->
+          <div class="hardware-row" style="margin-top:8px;">
+            <button id="btnGPS" class="topbar-icon">GPS</button>
+            <button id="btnCamera" class="topbar-icon">Camera</button>
+            <button id="btnMic2" class="topbar-icon">Mic</button>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="player-bottom">
+        <audio id="audio" preload="none"></audio>
+
+        <div class="mini-player">
+          <div class="mini-left">
+            <img id="miniArt" src="assets/icons/podcast-placeholder.svg" alt="Mini artwork" />
+            <div class="mini-text">
+              <div id="miniTitle">Select an episode</div>
+              <div id="miniPodcast">PodcastPlus</div>
+            </div>
+          </div>
+
+          <div class="mini-right">
+            <button id="miniPlay">▶</button>
+            <button id="miniQueue">☰</button>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+  </div>
+
+  <!-- QR Decoder -->
+  <script src="https://cdn.jsdelivr.net/npm/jsqr/dist/jsQR.js"></script>
+
+  <!-- Core -->
+  <script src="app.rss.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
+
+
+
